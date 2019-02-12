@@ -6,11 +6,11 @@
                  class="dragArea"
                  :options="dropElementOptions"
                  @start="onStart">
-        <el-col :span="12" 
+        <el-col :span="12"
                 :class="{ 'is-disabled': checkStopDragCondition(field) }"
-                v-for="(field, index) in fields" 
+                v-for="(field, index) in fields"
                 :key="index">
-          <el-button class="button__sidebar" 
+          <el-button class="button__sidebar"
                      type="info">
             {{ field.text }}
           </el-button>
@@ -36,15 +36,19 @@
     },
     methods: {
       clone(field){
-        var newField  = { 
+        var newField  = {
           fieldType: field.name,
-          isUnique: field.isUnique 
-        } 
+          isUnique: field.isUnique
+        }
 
         // Show placeholder
         if (field.isPlaceholderVisible){
           newField ["isPlaceholderVisible"] = false;
           newField ["placeholder"] = 'Input your text here...';
+        }
+        if (field.isDependsOnDefined){
+          newField ["isDependsOnDefined"] = false;
+          newField ["depends_on"] = [];
         }
 
         // Decide whether display label, required field, helpblock
@@ -53,6 +57,8 @@
           newField ["isHelpBlockVisible"] =  false;
           newField ["helpBlockText"] = 'Please input your helpblock here...';
           newField ["isRequired"] = false;
+          newField ["isDependsOnDefined"] = false;
+          newField ["depends_on"] = [];
         }
 
         if (field.group == "button"){
@@ -102,7 +108,7 @@
       opacity: 0.4;
     }
   }
-  
+
   // Display this ghost in <main> only
   .wrapper--forms .sortable__ghost {
     position: relative;
@@ -110,7 +116,7 @@
     border-bottom: 2px solid black;
     margin-top: 2px;
     margin-bottom: 2px;
-    
+
     [type="button"] {
       display: none;
     }

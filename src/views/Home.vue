@@ -5,19 +5,16 @@
         <div class="wrapper--forms">
           <!-- Show empty state if empty -->
           <div v-if="forms.length == 0" class="emptyState">
-            <span class="emptyState__emoji">╭( ✖_✖ )╮</span>
-            
-
             <p class="emptyState__p">Drag one element to get started</p>
           </div>
-        
+
           <draggable :list="forms"
-                     class="dragArea" 
+                     class="dragArea"
                      :options="sortElementOptions">
 
             <!-- The form elements starts (on the right) -->
-            <div v-for="(form, index) in forms" 
-                 :key="index" 
+            <div v-for="(form, index) in forms"
+                 :key="index"
                  v-bind="form"
                  class="form__group"
                  :class="{ 'is--active': form === activeForm  }">
@@ -28,7 +25,7 @@
                 <label class="form__label" v-model="form.label" v-show="form.hasOwnProperty('label')">{{ form.label }}</label>
 
                 <component :is="form.fieldType"
-                           :currentField="form" 
+                           :currentField="form"
                            class="form__field">
                 </component>
 
@@ -40,21 +37,21 @@
                 <el-button circle size="mini" type="primary" icon="el-icon-rank" class="form__actionitem--move"></el-button>
 
                 <el-button-group class="form__actionlist">
-                  <el-button size="mini" 
-                             type="primary" 
-                             icon="el-icon-plus" 
+                  <el-button size="mini"
+                             type="primary"
+                             icon="el-icon-plus"
                              @click="cloneElement(index, form)"
                              v-show="!form.isUnique"></el-button>
-                  <el-button size="mini" 
-                             type="primary" 
-                             icon="el-icon-delete" 
+                  <el-button size="mini"
+                             type="primary"
+                             icon="el-icon-delete"
                              @click="deleteElement(index)"></el-button>
                 </el-button-group>
               </div>
             </div>
           </draggable>
         </div>
-        
+
         <div class="wrapper--snippet">
           <pre>{{ forms }}</pre>
         </div>
@@ -95,10 +92,10 @@
     },
 
     computed: {
-      cssProps() { 
-        // Return an object that will generate css properties key 
+      cssProps() {
+        // Return an object that will generate css properties key
         // to match with the themingVars
-        // 
+        //
         // Example output: { '--theme-primary-color': this.themingVars.primaryColor }
         var result = {},
             themingVars = this.themingVars;
@@ -114,8 +111,8 @@
             else if (_.includes(newV, 'radius'))  suffix = "px"
 
             result [newV] = themingVars[v] + suffix;
-          } 
-        }   
+          }
+        }
 
         console.log("result", result)
 
@@ -160,7 +157,7 @@
     right: 0;
     bottom: 0;
   }
-  
+
   .dragArea {
     max-width: 600px;
     margin-left: auto;
@@ -168,7 +165,7 @@
     position: relative;
     min-height: 10px;
     z-index: 2;
-  } 
+  }
 
     .form__selectedlabel {
       display: none;
@@ -180,14 +177,14 @@
       top: -17px;
       right: 15px;
     }
-    
+
     .form__actionitem--move {
       position: absolute;
       right: -14px;
       top: 50%;
       transform: translateY(-50%);
       visibility: hidden;
-      
+
       &:active, &:focus, &:hover {
         border-color: lighten(black, 50%);
         background: lighten(black, 50%);
@@ -220,7 +217,7 @@
       &.is--active {
         border-color: lighten(black, 50%);
         background: lighten(black, 95%);
-  
+
         .form__actionlist { visibility: visible; }
         .form__selectedlabel { display: inline-block; }
       }

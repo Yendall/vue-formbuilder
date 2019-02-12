@@ -1,13 +1,7 @@
 <template>
   <div>
-    <el-select v-model="value" placeholder="Select">
-      <el-option
-        v-for="item in currentField.options"
-        :key="item.optionValue"
-        :value="item.optionValue"
-        :label="item.optionValue">
-      </el-option>
-    </el-select>
+    <v-select v-model="value" placeholder="Select" :options="options">
+    </v-select>
   </div>
 </template>
 
@@ -18,8 +12,23 @@
     props: ['currentField'],
     data(){
     	return {
+    	  rendered: false,
+    	  options: [],
     		value: ""
     	}
+    },
+    methods: {
+      getOptions(){
+        this.options = this.currentField.options.map(
+          function (i) {
+            return {label: i.optionLabel, value: i.optionValue}
+          })
+        this.rendered = true
+        return this.options
+      },
+    },
+    mounted () {
+      this.getOptions()
     }
   }
 </script>

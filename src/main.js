@@ -14,6 +14,8 @@ import './assets/scss/main.scss'
 
 
 import App from './App'
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
 
 // ================
 // Transitions
